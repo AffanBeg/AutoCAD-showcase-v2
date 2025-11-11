@@ -1,14 +1,9 @@
-# Node / Next
 node_modules
 .next
 out
 dist
-
-# Env
 .env
 .env.local
 .env.production
 .env.development
-
-# OS
 .DS_Store

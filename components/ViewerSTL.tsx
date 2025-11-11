@@ -1,9 +1,8 @@
 'use client';
 import React, { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useLoader } from '@react-three/fiber';
 import { OrbitControls, Grid, Html } from '@react-three/drei';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader.js';
-import { useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
 
 function STLMesh({ url }: { url: string }) {

@@ -1,6 +1,5 @@
 'use client';
 import React, { useState } from 'react';
-import ViewerSTL from './ViewerSTL';
 
 export default function UploadForm(){
   const [url, setUrl] = useState('');
@@ -37,7 +36,6 @@ export default function UploadForm(){
         />
         {fileName && <p className="mt-2 text-xs text-slate-400">Selected: {fileName}</p>}
       </div>
-      <ViewerSTL url={url} />
     </div>
   );
 }

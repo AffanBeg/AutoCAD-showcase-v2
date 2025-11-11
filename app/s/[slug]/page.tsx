@@ -1,8 +1,7 @@
 import ViewerSTL from "@/components/ViewerSTL";
 
 export default function ShowcasePublicPage({ params }: { params: { slug: string } }) {
-  // In real app, fetch showcase by slug from Supabase and get STL URL
-  const demoUrl = ""; // empty → shows placeholder until user provides URL
+  const demoUrl = "";
   return (
     <section className="space-y-5">
       <div className="flex items-center justify-between">
