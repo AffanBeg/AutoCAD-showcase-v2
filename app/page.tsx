@@ -8,8 +8,11 @@ export default function Page() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log('Homepage - loading:', loading, 'user:', user);
+
     // Redirect authenticated users to dashboard
     if (!loading && user) {
+      console.log('Redirecting to dashboard...');
       router.push('/dashboard');
     }
   }, [user, loading, router]);
@@ -17,7 +20,7 @@ export default function Page() {
   if (loading) {
     return (
       <section className="space-y-4">
-        <div className="text-slate-400">Loading...</div>
+        <div className="text-slate-400">Loading authentication...</div>
       </section>
     );
   }
