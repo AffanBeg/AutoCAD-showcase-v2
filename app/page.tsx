@@ -1,4 +1,27 @@
+'use client';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/components/AuthProvider';
+
 export default function Page() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    // Redirect authenticated users to dashboard
+    if (!loading && user) {
+      router.push('/dashboard');
+    }
+  }, [user, loading, router]);
+
+  if (loading) {
+    return (
+      <section className="space-y-4">
+        <div className="text-slate-400">Loading...</div>
+      </section>
+    );
+  }
+
   return (
     <section className="space-y-4">
       <h1 className="text-3xl font-semibold">Showcase3D</h1>

@@ -7,7 +7,6 @@ export async function GET(request: NextRequest) {
   const error = requestUrl.searchParams.get('error');
 
   if (error) {
-    // Redirect to login with error
     return NextResponse.redirect(new URL('/login?error=auth_failed', request.url));
   }
 
@@ -22,8 +21,10 @@ export async function GET(request: NextRequest) {
       console.error('Exchange code error:', exchangeError);
       return NextResponse.redirect(new URL('/login?error=auth_failed', request.url));
     }
+
+    return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
-  // Redirect to dashboard after successful login
-  return NextResponse.redirect(new URL('/dashboard', request.url));
+  // No code or error - likely hash-based token, redirect to client callback page
+  return NextResponse.redirect(new URL('/auth/callback/client', request.url));
 }
