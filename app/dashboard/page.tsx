@@ -19,9 +19,14 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      setLoading(false);
+      return;
+    }
 
     async function fetchShowcases() {
+      if (!user) return; // TypeScript guard
+
       try {
         // Import function from /lib/db.ts (Backend will provide)
         const { listShowcasesByUser } = await import('@/lib/db');
