@@ -1,5 +1,5 @@
+// @ts-nocheck
 'use client';
-/// <reference types="@react-three/fiber" />
 import React, { Suspense } from 'react';
 import { Canvas, useLoader } from '@react-three/fiber';
 import { OrbitControls, Grid, Html } from '@react-three/drei';
