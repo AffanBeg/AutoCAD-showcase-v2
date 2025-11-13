@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import ViewerSTL from '@/components/ViewerSTL';
 import Badge from '@/components/Badge';
 import { getShowcaseBySlug } from '@/lib/db';
-import { supabase } from '@/lib/supabaseClient';
+import { createServerClient } from '@/lib/supabaseServer';
 
 interface PageProps {
   params: { slug: string };
@@ -16,7 +16,8 @@ async function getShowcase(slug: string) {
   // Generate signed URL if status is ready
   let signedUrl = null;
   if (showcase.status === 'ready' && showcase.output_path) {
-    const { data } = await supabase.storage
+    const serverClient = createServerClient();
+    const { data } = await serverClient.storage
       .from(process.env.SUPABASE_STORAGE_BUCKET_CONVERTED || 'cad-converted')
       .createSignedUrl(showcase.output_path, 3600); // 1 hour expiry
     signedUrl = data?.signedUrl || null;

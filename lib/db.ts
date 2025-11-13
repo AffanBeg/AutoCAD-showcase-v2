@@ -1,5 +1,6 @@
 // Database helper functions for Showcase3D
 import { supabase } from './supabaseClient';
+import { createServerClient } from './supabaseServer';
 
 export interface Showcase {
   id: string;
@@ -54,8 +55,11 @@ export async function getUserShowcases(userId: string): Promise<Showcase[]> {
  * @returns Showcase object or null if not found
  */
 export async function getShowcaseBySlug(slug: string): Promise<Showcase | null> {
+  // Use server client for server-side queries
+  const serverClient = createServerClient();
+
   // Use public_showcases view for anonymous access
-  const { data, error } = await supabase
+  const { data, error } = await serverClient
     .from('public_showcases')
     .select('*')
     .eq('slug', slug)
