@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\Users\\badaf\\Documents\\VVork\\AutoCAD-showcase-v2\" -Recurse -Depth 2 -Directory)",
+      "Bash(Select-Object FullName)",
+      "WebFetch(domain:supabase.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(claude mcp add:*)",
+      "Bash(claude mcp --help:*)",
+      "Bash(claude mcp list:*)",
+      "WebSearch",
+      "WebFetch(domain:mcp.supabase.com)",
+      "Bash(claude mcp get:*)",
+      "Bash(claude mcp remove:*)",
+      "Bash(claude mcp add-json:*)",
+      "Bash(npx supabase --version)",
+      "Bash(curl:*)",
+      "Bash(psql:*)",
+      "Bash(mcp list-tools:*)",
+      "Bash(npx:*)",
+      "Bash(where:*)",
+      "Bash($null)",
+      "Bash(mkdir:*)",
+      "Bash(node --version:*)",
+      "Bash(npm --version:*)",
+      "Bash(\"/c/Program Files/nodejs/node.exe\" --version)",
+      "Bash(test:*)",
+      "Bash(\"/c/Program Files/nodejs/npm.cmd\" install)",
+      "Bash(\"/c/Users/badaf/AppData/Local/Programs/Python/Python312/python.exe\" --version)",
+      "Bash(\"/c/Users/badaf/AppData/Local/Programs/Python/Python312/python.exe\" verify-database.py)",
+      "mcp__supabase__execute_sql",
+      "mcp__supabase__list_tables"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

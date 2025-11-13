@@ -1,20 +1,44 @@
+'use client';
+import Link from 'next/link';
+import { useAuth } from './AuthProvider';
+import { supabase } from '@/lib/supabaseClient';
+import { useRouter } from 'next/navigation';
+
 export default function Navbar() {
+  const { user } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push('/');
+  };
+
   return (
-    <header className="sticky top-0 z-10 border-b border-white/10 backdrop-blur bg-black/30">
-      <div className="container py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-xl bg-white/5 border border-white/10 grid place-items-center">🔧</div>
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-slate-400">Showcase3D</p>
-            <h1 className="text-xl font-semibold leading-tight">Demo</h1>
-          </div>
+    <nav className="bg-white shadow">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        <Link href="/" className="text-xl font-bold text-blue-600">
+          Showcase3D
+        </Link>
+        <div className="flex gap-4 items-center">
+          {user ? (
+            <>
+              <Link href="/dashboard" className="text-gray-700 hover:text-blue-600">
+                Dashboard
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="text-gray-700 hover:text-red-600"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link href="/login" className="text-gray-700 hover:text-blue-600">
+              Login
+            </Link>
+          )}
         </div>
-        <nav className="inline-flex bg-white/5 border border-white/10 rounded-xl p-1">
-          <a className="h-9 px-3 rounded-lg text-sm hover:bg-white/5" href="/dashboard">Dashboard</a>
-          <a className="h-9 px-3 rounded-lg text-sm hover:bg-white/5" href="/dashboard/new">New</a>
-          <a className="h-9 px-3 rounded-lg text-sm hover:bg-white/5" href="/s/example-slug">Public</a>
-        </nav>
       </div>
-    </header>
+    </nav>
   );
 }

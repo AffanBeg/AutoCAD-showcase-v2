@@ -1,6 +1,7 @@
 import "./../styles/globals.css";
 import React from "react";
 import Navbar from "@/components/Navbar";
+import { AuthProvider } from "@/components/AuthProvider";
 
 export const metadata = {
   title: "Showcase3D",
@@ -11,8 +12,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        <main className="container py-10">{children}</main>
+        <AuthProvider>
+          <Navbar />
+          <main className="container py-10">{children}</main>
+        </AuthProvider>
       </body>
     </html>
   );

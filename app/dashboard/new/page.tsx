@@ -1,11 +1,10 @@
-import UploadForm from "@/components/UploadForm";
+import UploadForm from '@/components/UploadForm';
 
 export default function NewShowcasePage() {
   return (
-    <section className="space-y-5">
-      <h1 className="text-2xl font-semibold">New Showcase</h1>
-      <p className="text-slate-400 text-sm">Drop a CAD file or paste a link. We’ll convert STEP/OBJ → STL in the background.</p>
+    <div className="container mx-auto p-8">
+      <h1 className="text-3xl font-bold mb-6">Upload New Showcase</h1>
       <UploadForm />
-    </section>
+    </div>
   );
 }
