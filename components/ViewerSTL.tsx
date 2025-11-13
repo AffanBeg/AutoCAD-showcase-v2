@@ -8,10 +8,14 @@ import * as THREE from 'three';
 function STLMesh({ url }: { url: string }) {
   const geom = useLoader(STLLoader, url);
   geom.computeVertexNormals();
-  const box = new THREE.Box3().setFromBufferAttribute(geom.getAttribute('position'));
+
+  // STL files always use BufferAttribute for positions
+  const positionAttr = geom.getAttribute('position') as THREE.BufferAttribute;
+  const box = new THREE.Box3().setFromBufferAttribute(positionAttr);
   const size = new THREE.Vector3(); box.getSize(size);
   const maxDim = Math.max(size.x, size.y, size.z) || 1;
   const scale = 1.5 / maxDim;
+
   return (
     <mesh geometry={geom} scale={scale}>
       <meshStandardMaterial color="#9fb7ff" roughness={0.45} metalness={0.2} />
