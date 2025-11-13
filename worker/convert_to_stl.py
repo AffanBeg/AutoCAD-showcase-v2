@@ -14,19 +14,29 @@ def convert_to_stl(input_path: str, output_path: str):
         ext = input_path.lower().split('.')[-1]
 
         if ext in ['step', 'stp']:
-            # Import STEP file
+            # Import STEP file using Part module
+            import Part
             doc = FreeCAD.newDocument("temp")
-            Import.insert(input_path, "temp")
 
-            # Export all shapes as STL
-            objs = [obj for obj in doc.Objects if hasattr(obj, 'Shape')]
-            if not objs:
-                raise Exception("No shapes found in STEP file")
+            # Try using Part.read() first (more direct method)
+            try:
+                shape = Part.read(input_path)
+                print(f"[convert] imported shape with Part.read()")
+            except Exception as e:
+                print(f"[convert] Part.read() failed: {e}, trying Import.insert()")
+                # Fallback to Import.insert()
+                Import.insert(input_path, "temp")
+                objs = [obj for obj in doc.Objects if hasattr(obj, 'Shape')]
+                if not objs:
+                    raise Exception(f"No shapes found in STEP file. Document has {len(doc.Objects)} objects")
+                shapes = [obj.Shape for obj in objs]
+                shape = shapes[0] if len(shapes) == 1 else shapes[0].multiFuse(shapes[1:])
 
-            # Merge shapes and export
-            shapes = [obj.Shape for obj in objs]
-            compound = shapes[0] if len(shapes) == 1 else shapes[0].multiFuse(shapes[1:])
-            Mesh.export([compound], output_path)
+            # Convert shape to mesh and export
+            print(f"[convert] converting shape to mesh...")
+            mesh = Mesh.Mesh()
+            mesh.addFacets(shape.tessellate(0.01))
+            mesh.write(output_path)
 
         elif ext == 'obj':
             # Import OBJ and convert to STL

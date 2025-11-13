@@ -25,14 +25,5 @@ yarn-error.log*
 # Claude Code internal docs
 .claude-docs
 
-# Reports folder
-reports/
-
-# AI context and internal planning files
-projectContext.md
-ai/
-docs/Plan.md
-docs/Taskboard.md
-docs/Frontend_Tasks.md
-docs/Backend_Tasks.md
-docs/DevOps_Tasks.md
+# AI reference files and chatbot context
+.ai-reference/
