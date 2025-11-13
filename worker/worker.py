@@ -101,9 +101,16 @@ def process_job(job: Dict[str, Any]):
         # 1. Download file from cad-uploaded bucket
         local_input = download_file(input_path)
 
-        # 2. Convert to STL using FreeCAD
-        local_output = local_input.replace(os.path.splitext(local_input)[1], ".stl")
-        convert_to_stl(local_input, local_output)
+        # 2. Convert to STL using FreeCAD (or skip if already STL)
+        file_ext = os.path.splitext(local_input)[1].lower()
+        if file_ext == '.stl':
+            # Already STL, no conversion needed
+            print(f"[worker] file is already STL, skipping conversion")
+            local_output = local_input
+        else:
+            # Convert STEP/OBJ to STL
+            local_output = local_input.replace(os.path.splitext(local_input)[1], ".stl")
+            convert_to_stl(local_input, local_output)
 
         # 3. Upload to cad-converted bucket
         output_path = upload_converted_file(local_output, user_id, job_id)
@@ -125,7 +132,8 @@ def process_job(job: Dict[str, Any]):
 
         # 6. Clean up temp files
         os.remove(local_input)
-        os.remove(local_output)
+        if local_output != local_input:  # Don't try to remove same file twice
+            os.remove(local_output)
 
     except Exception as e:
         print(f"[worker] job {job_id} failed: {e}")
